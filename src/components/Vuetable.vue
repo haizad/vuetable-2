@@ -12,8 +12,11 @@
                 :style="{width: field.width}"
                 :class="['vuetable-th-checkbox-'+trackBy, field.titleClass]"
               >
+                <label class="containerCheckbox checkAll">
                 <input type="checkbox" @change="toggleAllCheckboxes(field.name, $event)"
                   :checked="checkCheckboxesState(field.name)">
+                  <span class="checkmarkAll"></span>
+                </label>
               </th>
               <th v-if="extractName(field.name) == '__component'"
                 :key="fieldIndex"
@@ -97,9 +100,12 @@
                     :key="fieldIndex"
                     :class="['vuetable-checkboxes', field.dataClass]"
                   >
+                  <label class="containerCheckbox">
                     <input type="checkbox"
                       @change="toggleCheckbox(item, field.name, $event)"
                       :checked="rowSelected(item, field.name)">
+                      <span class="checkmark"></span>
+                  </label>
                   </td>
                   <td v-if="extractName(field.name) === '__component'" 
                     :key="fieldIndex"
@@ -170,8 +176,11 @@
               :style="{width: field.width}"
               :class="['vuetable-th-checkbox-'+trackBy, field.titleClass]"
             >
+            <label class="containerCheckbox">
               <input type="checkbox" @change="toggleAllCheckboxes(field.name, $event)"
                 :checked="checkCheckboxesState(field.name)">
+                <span class="checkmark"></span>
+            </label>
             </th>
             <th v-if="extractName(field.name) == '__component'"
               :key="fieldIndex"
@@ -237,9 +246,12 @@
                 :key="fieldIndex"
                 :class="['vuetable-checkboxes', field.dataClass]"
               >
+              <label class="containerCheckbox">
                 <input type="checkbox"
                   @change="toggleCheckbox(item, field.name, $event)"
                   :checked="rowSelected(item, field.name)">
+                  <span class="checkmark"></span>
+              </label>
               </td>
               <td v-if="extractName(field.name) === '__component'" 
                 :key="fieldIndex"
@@ -1340,5 +1352,114 @@ export default {
     padding: 0 !important;
     border-left: none  !important;
     border-right: none  !important;
+  }
+
+/** */
+  .containerCheckbox {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  }
+
+  /* Hide the browser's default checkbox */
+  .containerCheckbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  .checkmarkAll {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 14px;
+    width: 14px;
+    border-radius: 25%;
+    background-color: #eee;
+  }
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 14px;
+    width: 14px;
+    border-radius: 25%;
+    background-color: #eee;
+  }
+
+  /* On mouse-over, add a grey background color */
+  .containerCheckbox:hover input ~ .checkmarkAll {
+    background-color: #ccc;
+  }
+
+  /* When the checkbox is checked, add a blue background */
+  .containerCheckbox input:checked ~ .checkmarkAll {
+    background-color: #2196F3;
+  }
+
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmarkAll:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  /* Show the checkmark when checked */
+  .containerCheckbox input:checked ~ .checkmarkAll:after {
+    display: block;
+  }
+
+  /* Style the checkmark/indicator */
+  .containerCheckbox .checkmarkAll:after {
+      height: 3px;
+      width: 6px;
+      top: 5px;
+      left: 4px;
+      background-color: rgb(255, 255, 255);
+  }
+
+  /* On mouse-over, add a grey background color */
+  .containerCheckbox:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+
+  /* When the checkbox is checked, add a blue background */
+  .containerCheckbox input:checked ~ .checkmark {
+    background-color: #2196F3;
+  }
+
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  /* Show the checkmark when checked */
+  .containerCheckbox input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  /* Style the checkmark/indicator */
+  .containerCheckbox .checkmark:after {
+    left: 4px;
+    top: 0px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
   }
 </style>
